@@ -1,23 +1,31 @@
 import { IonApp, IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } from "@ionic/react";
-import React from "react";
+import { React, useState } from "react";
 import HomePage from "./pages/HomePage";
 import SettingsPage from "./pages/SettingsPage";
 import { Route, Redirect } from "react-router-dom";
 import { IonReactRouter } from "@ionic/react-router";
 import { home, settings } from 'ionicons/icons';
 import EntryPage from "./pages/EntryPage";
+import LoginPage from "./pages/LoginPage";
 
 const App: React.FC = () => {
+
+  const [loggedIn, setLoggedIn] = useState(false);
+  console.log(`rendering App with loggedIn=${loggedIn}`);
+
   return (
     <IonApp>
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
-            <Route exact path="/entries">
-              <HomePage />
+            <Route Route exact path="/login">
+              <LoginPage homePage="entries" loggedIn={loggedIn} onLogin={() => setLoggedIn(true)}/>
             </Route>
-            <Route exact path="/entries/:id">
+            <Route Route exact path="/entries/:id">
               <EntryPage />
+            </Route>
+            <Route exact path="/entries">
+            {loggedIn ? <HomePage /> : <Redirect to="/login" />}
             </Route>
             <Route exact path="/settings">
               <SettingsPage />
