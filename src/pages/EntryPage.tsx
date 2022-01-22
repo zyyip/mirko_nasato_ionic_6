@@ -1,4 +1,6 @@
 import {
+  IonBackButton,
+  IonButtons,
   IonContent,
   IonHeader,
   IonPage,
@@ -25,6 +27,9 @@ const EntryPage: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton/>
+          </IonButtons>
           <IonTitle>{entry.title}</IonTitle>
         </IonToolbar>
       </IonHeader>
