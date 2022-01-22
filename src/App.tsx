@@ -5,16 +5,19 @@ import SettingsPage from "./pages/SettingsPage";
 import { Route, Redirect } from "react-router-dom";
 import { IonReactRouter } from "@ionic/react-router";
 import { home, settings } from 'ionicons/icons';
+import EntryPage from "./pages/EntryPage";
 
 const App: React.FC = () => {
   return (
     <IonApp>
       <IonReactRouter>
         <IonTabs>
-
           <IonRouterOutlet>
             <Route exact path="/home">
               <HomePage />
+            </Route>
+            <Route exact path="/entries/:id">
+              <EntryPage />
             </Route>
             <Route exact path="/settings">
               <SettingsPage />
