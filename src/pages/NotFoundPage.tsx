@@ -8,20 +8,14 @@ import {
 import React from 'react';
 
 
-const SettingsPage: React.FC = () => {
+const NotFoundPage: React.FC = () => {
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Settings</IonTitle>
-        </IonToolbar>
-      </IonHeader>
       <IonContent className="ion-padding">
-        {/* Go to <IonRouterLink routerLink="/home">Home</IonRouterLink> */}
-        This is the settings page.
+        Page not found.
       </IonContent>
     </IonPage>
   );
 };
 
-export default SettingsPage;
+export default NotFoundPage;

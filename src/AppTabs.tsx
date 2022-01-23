@@ -9,43 +9,43 @@ import EntryPage from "./pages/EntryPage";
 import { useAuth } from "./auth";
 
 interface Props {
-  
+
 }
 
 
-const AppTabs: React.FC<Props> = ({}) => {
+const AppTabs: React.FC<Props> = ({ }) => {
   const { loggedIn } = useAuth();
-  if (!loggedIn){
-    return <Redirect to="/login"/>
+  if (!loggedIn) {
+    return <Redirect to="/login" />
   }
   return (
-      <IonReactRouter>
-        <IonTabs>
-          <IonRouterOutlet>
-            <Route exact path="/my/entries/:id">
-              <EntryPage />
-            </Route>
-            <Route exact path="/my/entries">
-              <HomePage />
-            </Route>
-            <Route exact path="/my/settings">
-              <SettingsPage />
-            </Route>
-          </IonRouterOutlet>
-          <IonTabBar slot="bottom">
-            <IonTabButton tab="home" href="/my/entries">
-              <IonIcon icon={home}/>
-              <IonLabel>Home</IonLabel>
-            </IonTabButton>
-            <IonTabButton tab="settings" href="/my/settings">
-              <IonIcon icon={settings}/>
-              <IonLabel>Settings</IonLabel>
-            </IonTabButton>
-          </IonTabBar>
-        </IonTabs>
+    <IonReactRouter>
+      <IonTabs>
+        <IonRouterOutlet>
+          <Route exact path="/my/entries/:id">
+            <EntryPage />
+          </Route>
+          <Route exact path="/my/entries">
+            <HomePage />
+          </Route>
+          <Route exact path="/my/settings">
+            <SettingsPage />
+          </Route>
+        </IonRouterOutlet>
+        <IonTabBar slot="bottom">
+          <IonTabButton tab="home" href="/my/entries">
+            <IonIcon icon={home} />
+            <IonLabel>Home</IonLabel>
+          </IonTabButton>
+          <IonTabButton tab="settings" href="/my/settings">
+            <IonIcon icon={settings} />
+            <IonLabel>Settings</IonLabel>
+          </IonTabButton>
+        </IonTabBar>
+      </IonTabs>
 
-      </IonReactRouter>
-    
+    </IonReactRouter>
+
   );
 };
 
