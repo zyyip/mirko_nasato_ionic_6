@@ -5,6 +5,7 @@ import { IonReactRouter } from "@ionic/react-router";
 import LoginPage from "./pages/LoginPage";
 import { useState } from 'react';
 import AppTabs from './AppTabs';
+import { AuthContext } from './auth';
 
 const App: React.FC = () => {
 
@@ -13,17 +14,19 @@ const App: React.FC = () => {
 
   return (
     <IonApp>
-      <IonReactRouter>
+      <AuthContext.Provider value={{ loggedIn} }>
+      <IonReactRouter> 
           <IonRouterOutlet>
             <Route exact path="/login">
-              <LoginPage homePage="entries" loggedIn={loggedIn} onLogin={() => setLoggedIn(true)}/>
+              <LoginPage homePage="entries" onLogin={() => setLoggedIn(true)}/>
             </Route>
             <Route path="/my">
-              <AppTabs loggedIn={loggedIn}/>
+              <AppTabs/>
             </Route>
             <Redirect exact path="/" to="/my/entries" />
           </IonRouterOutlet>       
       </IonReactRouter>
+      </AuthContext.Provider>
     </IonApp>
   );
 };

@@ -8,14 +8,15 @@ import {
 } from '@ionic/react';
 import React from 'react';
 import { Redirect } from "react-router-dom";
+import { useAuth } from '../auth';
 
 interface Props {
-  loggedIn: boolean;
   homePage: String;
   onLogin: () => void;
 }
 
-const LoginPage: React.FC<Props> = ({ loggedIn, onLogin, homePage }) => {
+const LoginPage: React.FC<Props> = ({ onLogin, homePage }) => {
+  const { loggedIn } = useAuth();
   if (loggedIn){
     return <Redirect to={"/my/"+homePage} />
   }
