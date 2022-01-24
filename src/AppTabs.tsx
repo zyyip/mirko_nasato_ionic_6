@@ -13,7 +13,7 @@ interface Props {
 }
 
 
-const AppTabs: React.FC<Props> = ({ }) => {
+const AppTabs: React.FC<Props> = () => {
   const { loggedIn } = useAuth();
   if (!loggedIn) {
     return <Redirect to="/login" />

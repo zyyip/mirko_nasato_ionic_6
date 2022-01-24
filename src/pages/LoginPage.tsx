@@ -7,10 +7,11 @@ import {
   IonLabel,
   IonList,
   IonPage,
+  IonText,
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import React from 'react';
+import React, { useState } from 'react';
 import { Redirect } from "react-router-dom";
 import { useAuth } from '../auth';
 import { auth } from '../firebase';
@@ -23,15 +24,21 @@ interface Props {
 const LoginPage: React.FC<Props> = ({ onLogin, homePage }) => {
   
   const { loggedIn } = useAuth();
-  const [ email, setEmail ] = React.useState('');
-  const [ password, setPassword ] = React.useState('');
+  const [ email, setEmail ] = useState('');
+  const [ password, setPassword ] = useState('');
+  const [ error, setError ] = useState(false);
 
   const handleLogin = async () => {
-    const credential = await auth.signInWithEmailAndPassword( email, password );
-    console.log('credential', credential);
-    onLogin();
+    try{
+      const credential = await auth.signInWithEmailAndPassword( email, password );
+      console.log('credential:', credential);
+      onLogin();
+    } catch(error) {
+      setError(true);
+      console.log('error:', error)
+    }
     // console.log("should login with", {email, password})
-  }
+  };
 
   if (loggedIn){
     return <Redirect to={"/my/"+homePage} />
@@ -55,6 +62,9 @@ const LoginPage: React.FC<Props> = ({ onLogin, homePage }) => {
             <IonInput type="password" value={password} onIonChange={(event) => setPassword(event.detail.value)}/>
           </IonItem>
         </IonList>
+        {error &&
+          <IonText color="danger" >Invalid credentials</IonText>
+        }
         <IonButton expand="block" onClick={handleLogin}>Login</IonButton>
       </IonContent>
     </IonPage>
