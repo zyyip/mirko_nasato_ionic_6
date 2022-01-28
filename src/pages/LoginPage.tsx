@@ -19,10 +19,10 @@ import { auth } from '../firebase';
 
 interface Props {
   homePage: String;
-  onLogin: () => void;
+  // onLogin: () => void;
 }
 
-const LoginPage: React.FC<Props> = ({ onLogin, homePage }) => {
+const LoginPage: React.FC<Props> = ({ homePage }) => {
   
   const { loggedIn } = useAuth();
   const [ email, setEmail ] = useState('');
@@ -33,9 +33,9 @@ const LoginPage: React.FC<Props> = ({ onLogin, homePage }) => {
     try{
       setStatus({ loading: true, error: false});
       const credential = await auth.signInWithEmailAndPassword( email, password );
-      setStatus({ loading: false, error: false})
+      // setStatus({ loading: false, error: false})
       console.log('credential:', credential);
-      onLogin();
+      // onLogin();
     } catch(error) {
       console.log('error:', error);
       setStatus({ loading: false, error: true});
