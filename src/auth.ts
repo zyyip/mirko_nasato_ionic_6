@@ -20,7 +20,9 @@ export function useAuth(): Auth{
 export function useAuthInit(): AuthInit {
     const [authInit, setAuthInit] = useState<AuthInit>({ loading: true });
     useEffect(()=>{
-        //Unsubscribe is the function that want to call if we don't want to receive auth state changes
+        // Unsubscribe is the function that want to call if we don't want to receive auth state changes
+        // ideally we should return this function from our useEffect callback, this way if react unmounts the component the starter listening tool to auth state changes will auto unsubscribe. 
+        // In our case we are using this in the App component which will not be unmounted ever.
         return firebaseAuth.onAuthStateChanged((firebaseUser) => {
             const auth = firebaseUser ?
             { loggedIn: true, userId: firebaseUser.uid } :
