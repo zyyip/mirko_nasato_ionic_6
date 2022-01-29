@@ -7,9 +7,10 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { entries } from '../data';
+// import { entries } from '../data';
+import { firestore } from '../firebase';
 
 interface RouteParams {
   id: string;
@@ -17,12 +18,23 @@ interface RouteParams {
 
 const EntryPage: React.FC = () => {
   const { id } = useParams<RouteParams>();
-  const entry = entries.find((entry) => entry.id === id);
+  // const entry = entries.find((entry) => entry.id === id);
 
-  if (!entry) {
-    throw new Error(`No such entry: ${id}`);
+  
+  const [ entry, setEntry ] = useState<any>();
+  useEffect(() => {
+    const entryRef = firestore.collection('entries').doc(id);
+    entryRef.get().then(doc => {
+      const entry = { id: doc.id, ...doc.data()};
+      setEntry(entry);
+    });
   }
+  ,[id]);
 
+  // if (!entry) {
+  //   throw new Error(`No such entry: ${id}`);
+  // }
+  
   return (
     <IonPage>
       <IonHeader>
@@ -30,12 +42,12 @@ const EntryPage: React.FC = () => {
           <IonButtons slot="start">
             <IonBackButton/>
           </IonButtons>
-          <IonTitle>{entry.title}</IonTitle>
+          <IonTitle>{entry?.title}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
         {/* Go to <IonRouterLink routerLink="/home">Home</IonRouterLink> */}
-        {entry.description}
+        {entry?.description}
       </IonContent>
     </IonPage>
   );
