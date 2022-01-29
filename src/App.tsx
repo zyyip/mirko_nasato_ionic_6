@@ -8,6 +8,7 @@ import AppTabs from './AppTabs';
 import { AuthContext } from './auth';
 import NotFoundPage from "./pages/NotFoundPage";
 import { auth } from './firebase';
+import RegisterPage from "./pages/RegisterPage";
 
 
 
@@ -31,6 +32,9 @@ const App: React.FC = () => {
       <AuthContext.Provider value={{ loggedIn: authState.loggedIn }}>
         <IonReactRouter>
           <Switch>
+            <Route exact path="/register">
+              <RegisterPage homePage="entries"/>
+            </Route>
             <Route exact path="/login">
               {/* <LoginPage homePage="entries" onLogin={() => setLoggedIn(true)} /> */}
               <LoginPage homePage="entries" />
