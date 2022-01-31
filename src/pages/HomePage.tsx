@@ -10,19 +10,14 @@ import {
 import React, { useEffect, useState } from 'react';
 // import { entries } from '../data';
 import { firestore } from '../firebase';
+import { Entry, toEntry } from '../models';
 
 const HomePage: React.FC = () => {
-  const [ entries, setEntries ] = useState([]);
+  const [ entries, setEntries ] = useState<Entry[]>([]);
   useEffect(() => {
     const entriesRef = firestore.collection('entries');
-    entriesRef.get().then(snapshot => {
-      const entries = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setEntries(entries);
-      // snapshot.docs.forEach(doc => {console.log(doc.id, doc.data())});
-    });
+    // entriesRef.get().then(snapshot => { setEntries(snapshot.docs.map(doc => (toEntry(doc)))) })},[]);
+    entriesRef.get().then(({docs}) => setEntries(docs.map(doc => toEntry(doc))));
   },[]);
   return (
     <IonPage>
