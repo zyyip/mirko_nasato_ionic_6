@@ -9,6 +9,7 @@ import {
 } from '@ionic/react';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+import { useAuth } from '../auth';
 // import { entries } from '../data';
 import { firestore } from '../firebase';
 import { Entry, toEntry } from '../models';
@@ -18,14 +19,15 @@ interface RouteParams {
 }
 
 const EntryPage: React.FC = () => {
+  const { userId } = useAuth();
   const { id } = useParams<RouteParams>();
   // const entry = entries.find((entry) => entry.id === id);
 
   
   const [ entry, setEntry ] = useState<Entry>();
   useEffect(() => {
-    const entryRef = firestore.collection('entries').doc(id);
-    entryRef.get().then(doc => { setEntry(toEntry(doc)) })},[id]);
+    const entryRef = firestore.collection('users').doc(userId).collection('entries').doc(id);
+    entryRef.get().then(doc => { setEntry(toEntry(doc)) })},[userId, id]);
 
   // if (!entry) {
   //   throw new Error(`No such entry: ${id}`);
