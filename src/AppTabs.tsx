@@ -7,6 +7,7 @@ import { IonReactRouter } from "@ionic/react-router";
 import { home, settings } from 'ionicons/icons';
 import EntryPage from "./pages/EntryPage";
 import { useAuth } from "./auth";
+import AddEntryPage from './pages/AddEntryPage';
 
 interface Props {
 
@@ -24,6 +25,9 @@ const AppTabs: React.FC<Props> = () => {
         <IonRouterOutlet>
           <Route exact path="/my/entries/:id">
             <EntryPage />
+          </Route>
+          <Route exact path="/my/entries/add">
+            <AddEntryPage />
           </Route>
           <Route exact path="/my/entries">
             <HomePage />

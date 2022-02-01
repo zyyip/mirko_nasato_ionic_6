@@ -32,7 +32,7 @@ const EntryPage: React.FC = () => {
   // if (!entry) {
   //   throw new Error(`No such entry: ${id}`);
   // }
-  
+  console.log('[EntryPage] render');
   return (
     <IonPage>
       <IonHeader>
