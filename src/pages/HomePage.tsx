@@ -1,6 +1,9 @@
 import {
   IonContent,
+  IonFab,
+  IonFabButton,
   IonHeader,
+  IonIcon,
   IonItem,
   IonList,
   IonPage,
@@ -12,6 +15,7 @@ import { useAuth } from '../auth';
 // import { entries } from '../data';
 import { firestore } from '../firebase';
 import { Entry, toEntry } from '../models';
+import { add } from 'ionicons/icons';
 
 const HomePage: React.FC = () => {  
   const { userId } = useAuth();
@@ -37,6 +41,11 @@ const HomePage: React.FC = () => {
             </IonItem>
           ))}
         </IonList>
+        <IonFab vertical="bottom" horizontal='end'>
+          <IonFabButton routerLink="/my/entries/add">
+            <IonIcon icon={add} />
+          </IonFabButton>
+        </IonFab>
       </IonContent>
     </IonPage>
   );
