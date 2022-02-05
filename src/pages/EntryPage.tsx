@@ -16,6 +16,7 @@ import { useAuth } from '../auth';
 import { firestore } from '../firebase';
 import { Entry, toEntry } from '../models';
 import { trash } from 'ionicons/icons';
+import { formatDate } from '../date';
 
 interface RouteParams {
   id: string;
@@ -42,7 +43,7 @@ const EntryPage: React.FC = () => {
   // if (!entry) {
   //   throw new Error(`No such entry: ${id}`);
   // }
-  console.log('[EntryPage] render');
+  // console.log('[EntryPage] render');
   return (
     <IonPage>
       <IonHeader>
@@ -50,7 +51,7 @@ const EntryPage: React.FC = () => {
           <IonButtons slot="start">
             <IonBackButton/>
           </IonButtons>
-          <IonTitle>{entry?.title}</IonTitle>
+          <IonTitle>{formatDate(entry?.date)}</IonTitle>
           <IonButtons slot="end">
             <IonButton onClick={handleDelete}>
               <IonIcon icon={trash} slot="icon-only"/>
@@ -60,7 +61,8 @@ const EntryPage: React.FC = () => {
       </IonHeader>
       <IonContent className="ion-padding">
         {/* Go to <IonRouterLink routerLink="/home">Home</IonRouterLink> */}
-        {entry?.description}
+        <h2>{entry?.title}</h2>
+        <p>{entry?.description}</p>
       </IonContent>
     </IonPage>
   );
