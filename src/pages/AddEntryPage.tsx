@@ -21,6 +21,7 @@ import { useAuth} from '../auth';
 import { firestore, storage } from '../firebase';
 import { useEffect } from 'react';
 import { CameraResultType, CameraSource, Plugins } from '@capacitor/core';
+import { isPlatform } from '@ionic/core';
 const { Camera } = Plugins;
 
 async function savePicture(blobUrl, userId){
@@ -70,20 +71,24 @@ const AddEntryPage: React.FC = () => {
       console.log('create URL:', pictureUrl);
     }
   }
-
+  
   const handlePictureClick  = async () =>{ 
-    // fileInputRef.current.click();
-    try{
-      const photo = await Camera.getPhoto({
-        resultType: CameraResultType.Uri,
-        source: CameraSource.Prompt,
-        width: 600,
-      });
-      // console.log('photo: ', photo.webPath);
-      setPictureUrl(photo.webPath);
-    } catch(error){
-      console.log('Camera error:' , error);
-    };
+    if(isPlatform('capacitor')){
+      try{
+        const photo = await Camera.getPhoto({
+          resultType: CameraResultType.Uri,
+          source: CameraSource.Prompt,
+          width: 600,
+        });
+        // console.log('photo: ', photo.webPath);
+        setPictureUrl(photo.webPath);
+      } catch(error){
+        console.log('Camera error:' , error);
+      };
+    }
+    else{
+      fileInputRef.current.click();
+    }
   };
 
   return (
