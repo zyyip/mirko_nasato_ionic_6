@@ -6,6 +6,7 @@ export interface Entry{
     title: string;
     description: string;
     date: string;
+    pictureUrl: string;
 }
 
 export function toEntry(doc: firebase.firestore.DocumentSnapshot): Entry{

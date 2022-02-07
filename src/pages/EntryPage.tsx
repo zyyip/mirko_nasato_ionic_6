@@ -63,6 +63,7 @@ const EntryPage: React.FC = () => {
         {/* Go to <IonRouterLink routerLink="/home">Home</IonRouterLink> */}
         <h2>{entry?.title}</h2>
         <p>{entry?.description}</p>
+        <img src={entry?.pictureUrl} alt={entry?.title}/>
       </IonContent>
     </IonPage>
   );
