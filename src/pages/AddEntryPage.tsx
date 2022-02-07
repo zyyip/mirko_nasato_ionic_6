@@ -20,7 +20,7 @@ import { useHistory } from 'react-router';
 import { useAuth} from '../auth';
 import { firestore, storage } from '../firebase';
 import { useEffect } from 'react';
-import { CameraResultType, Plugins } from '@capacitor/core';
+import { CameraResultType, CameraSource, Plugins } from '@capacitor/core';
 const { Camera } = Plugins;
 
 async function savePicture(blobUrl, userId){
@@ -54,7 +54,7 @@ const AddEntryPage: React.FC = () => {
     // console.log('should save:', { title, description });
     const entriesRef = firestore.collection('users').doc(userId).collection('entries');
     const entryData = { date, title, pictureUrl, description };
-    if (pictureUrl.startsWith('blob:')){
+    if (!pictureUrl.startsWith('/assets')){
       entryData.pictureUrl = await savePicture(pictureUrl, userId);
     }
     const entryRef = await entriesRef.add(entryData);
@@ -73,11 +73,17 @@ const AddEntryPage: React.FC = () => {
 
   const handlePictureClick  = async () =>{ 
     // fileInputRef.current.click();
-    const photo = await Camera.getPhoto({
-      resultType: CameraResultType.Uri,
-    });
-    // console.log('photo: ', photo.webPath);
-    setPictureUrl(photo.webPath);
+    try{
+      const photo = await Camera.getPhoto({
+        resultType: CameraResultType.Uri,
+        source: CameraSource.Prompt,
+        width: 600,
+      });
+      // console.log('photo: ', photo.webPath);
+      setPictureUrl(photo.webPath);
+    } catch(error){
+      console.log('Camera error:' , error);
+    };
   };
 
   return (
